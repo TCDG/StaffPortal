@@ -1,0 +1,25 @@
+{
+  "name": "staffportal",
+  "version": "1.0.0",
+  "description": "The application to connect your community's staff team!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GilbertGobbels/StaffPortal.git"
+  },
+  "author": "GilbertGobbels",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GilbertGobbels/StaffPortal/issues"
+  },
+  "homepage": "https://github.com/GilbertGobbels/StaffPortal#readme",
+  "dependencies": {
+    "blessed": "^0.1.81",
+    "blessed-contrib": "^4.7.5",
+    "colors": "^1.1.2",
+    "rethinkdb": "^2.3.3"
+  }
+}
