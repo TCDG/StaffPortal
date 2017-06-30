@@ -71,7 +71,7 @@ module.exports.init = () => {
   screen.render();
   
   toreturn.screen = screen;
-  
+    
   screen.key('q', function() {
     process.exit(0);
   });

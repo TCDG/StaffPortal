@@ -3,21 +3,19 @@
 // Preparing modules and default values
 const utils = require('./Global/utils');
 var destination = "172.0.0.1:1916";
+const events = require('./Global/events')
 
 if (process.argv.indexOf("-d") > -1) {
   destination = process.argv[process.argv.indexOf("-d")+1]
 } 
 
 // Initialize maintainer console
-var maintainerc = utils.screen.init();
+var mtc = utils.screen.init();
 
-var console = new utils.Console(maintainerc)
+var console = new utils.Console(mtc)
 
-console.log("Too too", {ok: "ok", mode: "core"})
+mtc.input.on("submit", () => {events.command(mtc, console)})
 
-console.info("IN FO RM AT IO N?", {ok: "ok", mode: "core"})
-
-console.err("EACCES", {ok: "no ok", mode: "server"})
 // This is how we're going to do it
 /*
 Because PM2 doesn't like blessed, this script will launch staffportal in the background and open the maintainer console.
