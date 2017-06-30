@@ -8,20 +8,21 @@ const colors = require('colors')
 
 // Init the screen for non-scale launcher
 // Returns the screen object
-module.exports.launch = (config) => {
+module.exports.init = () => {
+  var toreturn = {}
   
   // Status Markdowns
-  var spstat = grid.set(0, 0, 2, 1, contrib.markdown);
-  var corestat = grid.set(0, 1, 2, 1, contrib.markdown);
-  var svrstat = grid.set(0, 2, 2, 1, contrib.markdown);
-  var botstat = grid.set(0, 3, 2, 1, contrib.markdown);
-  spstat.setMarkdown(`# StaffPortal\n${"Status: ".bold + "Healthy".green}\n${"Task: ".bold + "None".green}`);
-  corestat.setMarkdown(`# Core\n${"Status: ".bold + "Healthy".green}\n${"Task: ".bold + "None".green}`);
-  svrstat.setMarkdown(`# Server Cluster\n${"Status: ".bold + "Healthy".green}\n${"Task: ".bold + "None".green}`);
-  botstat.setMarkdown(`# Connector Cluster\n${"Status: ".bold + "Healthy".green}\n${"Task: ".bold + "None".green}`);
+  toreturn.spstat = grid.set(0, 0, 2, 1, contrib.markdown);
+  toreturn.corestat = grid.set(0, 1, 2, 1, contrib.markdown);
+  toreturn.svrstat = grid.set(0, 2, 2, 1, contrib.markdown);
+  toreturn.botstat = grid.set(0, 3, 2, 1, contrib.markdown);
+  toreturn.spstat.setMarkdown(`# StaffPortal\n${"Status: ".bold + "Offline"}\n${"Task: ".bold + "None".green}`);
+  toreturn.corestat.setMarkdown(`# Core\n${"Status: ".bold + "Offline"}\n${"Task: ".bold + "None".green}`);
+  toreturn.svrstat.setMarkdown(`# Server Cluster\n${"Status: ".bold + "Offline"}\n${"Task: ".bold + "None".green}`);
+  toreturn.botstat.setMarkdown(`# Connector Cluster\n${"Status: ".bold + "Offline"}\n${"Task: ".bold + "None".green}`);
   
   // Resource Donuts
-  var corecpu = grid.set(0, 4, 4, 1, contrib.donut, {
+  toreturn.corecpu = grid.set(0, 4, 4, 1, contrib.donut, {
     label: "Core CPU",
     radius: 16,
     arcWidth: 6,
@@ -30,7 +31,7 @@ module.exports.launch = (config) => {
       {percent: 80, label: "Core CPU", color: 'red'}
     ]
   })
-  var coreram = grid.set(4, 4, 4, 1, contrib.donut, {
+  toreturn.coreram = grid.set(4, 4, 4, 1, contrib.donut, {
     label: "Core CPU",
     radius: 16,
     arcWidth: 6,
@@ -39,7 +40,7 @@ module.exports.launch = (config) => {
       {percent: 40, label: "Core Memory - 2543MB", color: 'green'}
     ]
   })
-  var coredisk = grid.set(8, 4, 4, 1, contrib.donut, {
+  toreturn.coredisk = grid.set(8, 4, 4, 1, contrib.donut, {
     label: "Core CPU",
     radius: 16,
     arcWidth: 6,
@@ -50,39 +51,30 @@ module.exports.launch = (config) => {
   })
   
   // Connected Nodes
-  var nodelist = grid.set(12, 4, 4, 1, contrib.markdown);
-  nodelist.setMarkdown(`## Core\n * 123.45.67.89\n\n## Servers\n * 987.65.43.21\n * 132.412.53.54\n\n## Connectors\n * 21.21.42.42`)
+  toreturn.nodelist = grid.set(12, 4, 4, 1, contrib.markdown);
+  toreturn.nodelist.setMarkdown(`## Core\n * 123.45.67.89\n\n## Servers\n * 987.65.43.21\n * 132.412.53.54\n\n## Connectors\n * 21.21.42.42`)
   
   // Logs
-  var log = grid.set(2, 2, 12, 2, contrib.log,  { fg: ""
+  toreturn.log = grid.set(2, 2, 12, 2, contrib.log,  { fg: ""
     , selectedFg: "gray"
     , label: 'StaffPortal Logs'})
-  log.log("Data from some worker")
-  log.log("Errors from another worker".red)
 
-  var inputLog = grid.set(2, 0, 12, 2, contrib.log,  { fg: ""
+  toreturn.inputLog = grid.set(2, 0, 12, 2, contrib.log,  { fg: ""
     , selectedFg: "gray"
     , label: 'Console Output'})
-  inputLog.log("Data returned from command")
-  inputLog.log("A command failed and thus this message is sexy red".red)
   
   // Console Input
-  var input = grid.set(14, 0, 2, 4, blessed.textbox, {inputOnFocus: true, label: "Console Input"})
-  input.focus();
-  
-  // Handle Inputs
-  input.on('submit', () => {
-    inputLog.log(input.getValue())
-    input.clearInput()
-    input.focus()
-  })
-  
-  // Handle Exits
-  screen.key(['escape', 'q', 'C-c'], function(ch, key) {
-    return process.exit(0);
-  });
+  toreturn.input = grid.set(14, 0, 2, 4, blessed.textbox, {inputOnFocus: true, label: "Console Input"})
+  toreturn.input.focus();
   
   // Render the screen.
   screen.render();
-  return screen;
+  
+  toreturn.screen = screen;
+  
+  screen.key('q', function() {
+    process.exit(0);
+  });
+  
+  return toreturn;
 }
