@@ -8,18 +8,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GilbertGobbels/StaffPortal.git"
+    "url": "git+https://git.sslcommunity.io/staffportal/StaffPortal.git"
   },
   "author": "GilbertGobbels",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/GilbertGobbels/StaffPortal/issues"
+    "url": "https://git.sslcommunity.io/staffportal/StaffPortal/issues"
   },
-  "homepage": "https://github.com/GilbertGobbels/StaffPortal#readme",
+  "homepage": "https://git.sslcommunity.io/staffportal/StaffPortal",
   "dependencies": {
+    "amqplib": "^0.5.1",
     "blessed": "^0.1.81",
     "blessed-contrib": "^4.7.5",
     "colors": "^1.1.2",
-    "rethinkdb": "^2.3.3"
+    "rethinkdb": "^2.3.3",
+    "socket.io": "^2.0.3",
+    "zeromq": "^4.4.1",
+    "zmq": "^2.15.3"
   }
 }

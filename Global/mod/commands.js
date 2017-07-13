@@ -1,7 +1,6 @@
 // Maintainer Console Commands
 
 var commands = module.exports;
-const console = require('./console')
 
 commands.help = {
   description: "List all commands, or get help with a certain command.",

@@ -2,14 +2,15 @@
 
 var blessed = require('blessed')
 var contrib = require('blessed-contrib')
-var screen = blessed.screen()
-var grid = new contrib.grid({rows: 16, cols: 5, screen: screen})
 const colors = require('colors')
 
-// Init the screen for non-scale launcher
-// Returns the screen object
+// Init the screen for maintainer console
+// Returns an object with the screen and all boxes
 module.exports.init = () => {
   var toreturn = {}
+  
+  var screen = blessed.screen()
+  var grid = new contrib.grid({rows: 16, cols: 5, screen: screen}) 
   
   // Status Markdowns
   toreturn.spstat = grid.set(0, 0, 2, 1, contrib.markdown);
@@ -32,7 +33,7 @@ module.exports.init = () => {
     ]
   })
   toreturn.coreram = grid.set(4, 4, 4, 1, contrib.donut, {
-    label: "Core CPU",
+    label: "Core Memory",
     radius: 16,
     arcWidth: 6,
     yPadding: 2,
@@ -41,7 +42,7 @@ module.exports.init = () => {
     ]
   })
   toreturn.coredisk = grid.set(8, 4, 4, 1, contrib.donut, {
-    label: "Core CPU",
+    label: "Core Diskspace",
     radius: 16,
     arcWidth: 6,
     yPadding: 2,
@@ -51,7 +52,7 @@ module.exports.init = () => {
   })
   
   // Connected Nodes
-  toreturn.nodelist = grid.set(12, 4, 4, 1, contrib.markdown);
+  toreturn.nodelist = grid.set(12, 4, 4, 1, contrib.markdown, {label: "Connected Nodes"});
   toreturn.nodelist.setMarkdown(`## Core\n * 123.45.67.89\n\n## Servers\n * 987.65.43.21\n * 132.412.53.54\n\n## Connectors\n * 21.21.42.42`)
   
   // Logs

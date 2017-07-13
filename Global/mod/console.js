@@ -1,11 +1,12 @@
 // Global screen logs handler
 const winston = require('winston')
 
-class Console {
+class Logger {
   constructor(mtc) {
-    this.inputLog = mtc.inputLog
-    this.outputLog = mtc.log
-    
+    if (mtc) {
+      this.inputLog = mtc.inputLog
+      this.outputLog = mtc.log
+    }
     this.levels = {
       crit: 0,
       err: 1,
@@ -28,7 +29,8 @@ class Console {
           maxsize: 10*1024*1024,
           tailable: true,
           json: false
-        })
+        }),
+        new (winston.transports.Console)({})
       ]
     })
   }
@@ -40,32 +42,32 @@ class Console {
   crit(msg, data) {
     this.logger.crit(`(${this.timestamp}) (${data.mode}) ${msg}`, data)
     
-    this.outputLog.log(`CRITICAL  : ${msg}`.red.bold + `\n${JSON.stringify(data)}`)
+    if (this.outputLog) this.outputLog.log(`CRITICAL  : ${msg}`.red.bold + `\n${JSON.stringify(data)}`)
   }
   
   err(msg, data) {
     this.logger.err(`(${this.timestamp}) (${data.mode}) ${msg}`, data)
     
-    this.outputLog.log(`ERROR  : ${msg}`.red + `\n${JSON.stringify(data)}`)
+    if (this.outputLog) this.outputLog.log(`ERROR  : ${msg}`.red + `\n${JSON.stringify(data)}`)
   }
   
   warn(msg, data) {
     this.logger.warn(`(${this.timestamp}) (${data.mode}) ${msg}`, data)
     
-    this.outputLog.log(`WARNING  : ${msg}`.yellow + `\n${JSON.stringify(data)}`)
+    if (this.outputLog) this.outputLog.log(`WARNING  : ${msg}`.yellow + `\n${JSON.stringify(data)}`)
   }
   
   info(msg, data) {
     this.logger.info(`(${this.timestamp}) (${data.mode}) ${msg}`, data)
     
-    this.outputLog.log(`INFO   : ${msg}`.white.bold + `\n${JSON.stringify(data)}`)
+    if (this.outputLog) this.outputLog.log(`INFO   : ${msg}`.white.bold + `\n${JSON.stringify(data)}`)
   }
   
   log(msg, data) {
     this.logger.logging(`(${this.timestamp}) (${data.mode}) ${msg}`, data)
     
-    this.outputLog.log(`LOG  : ${msg}` + `\n${JSON.stringify(data)}`)
+    if (this.outputLog) this.outputLog.log(`LOG  : ${msg}` + `\n${JSON.stringify(data)}`)
   }
 }
 
-module.exports = Console
+module.exports = Logger

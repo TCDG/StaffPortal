@@ -7,11 +7,11 @@ var path = require('path'),
 
 config = {
   // StaffPortal's global process, CORE
-  // This process handles processing that should be accessable by all programs, the launch of staffportal, the managing of your staffportal instance, and global modules.
+  // This process handles processing that should be accessable by all programs, the launch of staffportal, the communication between staffportal nodes, and your database connection.
   core: {
     // Database configuration
     rethink: {
-      // The rethinkdb nodes to connect to. An array if multiple, if only one node an object.
+      // The rethinkdb nodes to connect to. An array if you're using multiple nodes, if you're using only one node an object.
       nodes:
         {
           host: 'localhost',
@@ -31,7 +31,10 @@ config = {
       buffer: 50,
       max: 100
     },
-   
+    
+    // The address StaffPortal should bind the socket for internal communication to.
+    // THIS IS NOT THE HTTP/HTTPS ADDRESS USED FOR THE WEB INTERFACE.
+    address: "tcp://172.0.0.1:1916"
   },
   // StaffPortal's connector process, BOT
   // BOT handles all connections to third-party API's such as Discord.
@@ -55,13 +58,11 @@ config = {
     server_ip: "172.0.0.1",
     server_port: 80,
     
-    // User Authentication and Authorization required
-    // SET TO TRUE IF BINDING IP IS NOT LOCALHOST. THIS GRANTS ADMIN PRIVILIGES TO EVERYONE.
-    user_auth: false,
-    
     // Standard admin user and password. If password left empty, it must be set on initial login.
     admin: "admin",
     pass: ""
   }
   
 }
+
+module.exports = config;
