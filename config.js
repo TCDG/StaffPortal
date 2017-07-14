@@ -34,7 +34,9 @@ config = {
     
     // The address StaffPortal should bind the socket for internal communication to.
     // THIS IS NOT THE HTTP/HTTPS ADDRESS USED FOR THE WEB INTERFACE.
-    address: "tcp://172.0.0.1:1916"
+    address: "tcp://172.0.0.1:1916",
+    // Internal communication secret. If not set, all incoming messages to zmq will be allowed.
+    secret: ""
   },
   // StaffPortal's connector process, BOT
   // BOT handles all connections to third-party API's such as Discord.

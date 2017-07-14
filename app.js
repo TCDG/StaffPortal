@@ -2,17 +2,16 @@
 
 // Preparing modules and default values
 const utils = require('./Global/utils');
-var destination = "172.0.0.1:1916";
 const events = require('./Global/events')
 
-if (process.argv.indexOf("-d") > -1) {
-  destination = process.argv[process.argv.indexOf("-d")+1]
-} 
+const d = {
+  ADDR: process.argv.indexOf("-d") > -1 ? process.argv[process.argv.indexOf("-d")+1] : "tcp://172.0.0.1:1916"
+}
 
 // Initialize maintainer console
 var mtc = utils.screen.init();
 
-var console = new utils.Console(mtc)
+var console = new utils.Logger(mtc)
 
 mtc.input.on("submit", () => {events.command(mtc, console)})
 

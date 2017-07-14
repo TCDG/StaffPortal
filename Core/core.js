@@ -12,5 +12,5 @@ logger.info("Starting StaffPortal core...", {mode: "core"})
 // Prepare zmq router
 const Socket = require('./mod/zmq').Socket
 
-const socket = new Socket(config.core.address, logger)
+const s = new Socket(config.core.address, logger)
 
